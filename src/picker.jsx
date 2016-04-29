@@ -14,6 +14,7 @@ var Picker = React.createClass({
       ]),
       onChange: React.PropTypes.func.isRequired,
       showAttribution: React.PropTypes.bool,
+      useNative: React.PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -156,7 +157,7 @@ var Picker = React.createClass({
 
       _.each(this.props.categories, function(details, key){
         headers.push(<li key={key} className={this.state.category == key ? "active" : ""}>
-          <Emoji role="menuitem" aria-label={key + " category"} shortname={":"+details.emoji+":"} onClick={function(){
+          <Emoji role="menuitem" aria-label={key + " category"} shortname={":"+details.emoji+":"} useNative={this.props.useNative} onClick={function(){
             jumpToCategory(key);
           }}/>
         </li>);
@@ -181,11 +182,11 @@ var Picker = React.createClass({
 
             if (!search || !term || modified.keywords.some(function(keyword) { return new RegExp("^"+term).test(keyword); })) {
 
-              return <li key={modified.unicode}><Emoji {...modified} aria-label={modified.name} role="option" onClick={function(){
+              return <li key={modified.unicode}><Emoji {...modified} aria-label={modified.name} role="option" useNative={this.props.useNative} onClick={function(){
                 onChange(modified);
               }}/></li>;
             }
-          });
+          }.bind(this));
 
           if (_.compact(list).length) {
             sections.push(<div className="emoji-category" key={key} ref={key}>
