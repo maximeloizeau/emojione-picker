@@ -1,4 +1,5 @@
 var React = require("react");
+var _ = require('lodash');
 
 var Modifier = React.createClass({
   propTypes: {
@@ -6,7 +7,8 @@ var Modifier = React.createClass({
   },
   
   render: function() {
-    return <a {...this.props} onClick={this.props.onClick} className={this.props.active ? "modifier active" : "modifier"} style={{background: this.props.hex}}></a>;
+    const otherProps = _.omit(this.props, ['hex', 'active']);
+    return <a {...otherProps} onClick={this.props.onClick} className={this.props.active ? "modifier active" : "modifier"} style={{background: this.props.hex}}></a>;
   }
 });
 

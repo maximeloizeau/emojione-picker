@@ -21,7 +21,8 @@ var Emoji = React.createClass({
   },
   
   render: function() {
-    return <div {...this.props} onClick={this.props.onClick} tabIndex="0" className="emoji" 
+    const otherProps = _.omit(this.props, ['shortname', 'useNative']);
+    return <div {...otherProps} onClick={this.props.onClick} tabIndex="0" className="emoji" 
                 title={this.props.name} 
                 dangerouslySetInnerHTML={this.createMarkup()}>
     </div>
